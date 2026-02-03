@@ -14,6 +14,7 @@ import {
 } from '../../middlewares/contact-validators.js';
 // IMPORTANTE: Importar el uploader
 import { uploadContactImage } from '../../middlewares/file-uploaders.js';
+import { cleanupUploadedFileOnFinish } from '../../middlewares/delete-file-on-error.js';
 
 const router = Router();
 
@@ -24,6 +25,7 @@ router.get('/:id', validateGetContactById, getContactById);
 router.post(
     '/',
     uploadContactImage.single('image'), // Middleware de Multer/Cloudinary
+    cleanupUploadedFileOnFinish, // Middleware para limpiar en caso de error
     validateCreateContact,
     createContact
 );

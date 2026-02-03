@@ -13,6 +13,7 @@ import {
     validateGetTodoById
 } from '../../middlewares/toDoList-validators.js';
 import { uploadToDoListImage } from '../../middlewares/file-uploaders.js';
+import { cleanupUploadedFileOnFinish } from '../../middlewares/delete-file-on-error.js';
 
 const router = Router();
 
@@ -24,6 +25,7 @@ router.get('/:id', validateGetTodoById, getTodoById);
 router.post(
     '/',
     uploadToDoListImage.single('image'),
+    cleanupUploadedFileOnFinish,
     validateCreateTodo,
     createTodo
 );
